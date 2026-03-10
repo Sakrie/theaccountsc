@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+<meta charset="UTF-8">
+<title>الحسابات - الموقع</title>
+<link rel="stylesheet" href="style.css">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+<!-- شاشة تسجيل الدخول -->
+<div id="loginScreen">
+<h2>تسجيل الدخول</h2>
+<input id="username" placeholder="اسم المستخدم">
+<input type="password" id="password" placeholder="كلمة المرور">
+<button onclick="login()">دخول</button>
+
+<h3>أو إنشاء حساب جديد</h3>
+<input id="newUser" placeholder="اسم المستخدم الجديد">
+<input type="password" id="newPass" placeholder="كلمة المرور">
+<button onclick="register()">إنشاء حساب</button>
+</div>
+
+<!-- الموقع الرئيسي -->
+<div id="app" style="display:none">
+<h1>الحسابات</h1>
+<button onclick="darkMode()">الوضع الليلي</button>
+
+<!-- قائمة جانبية -->
+<div id="sidebar">
+<button onclick="showPage('dashboard')">الصفحة الرئيسية</button>
+<button onclick="showPage('agents')">المندوبين</button>
+</div>
+
+<!-- صفحة Dashboard -->
+<div id="dashboard" class="page">
+<h2>الإحصائيات</h2>
+<p>إجمالي الواصل اليوم: <span id="dailyTotal">0</span></p>
+<p>إجمالي الواصل الشهر: <span id="monthlyTotal">0</span></p>
+<p>إجمالي الواصل السنة: <span id="yearlyTotal">0</span></p>
+<canvas id="statsChart"></canvas>
+</div>
+
+<!-- صفحة المندوبين -->
+<div id="agents" class="page" style="display:none">
+<h2>المندوبين</h2>
+<input id="agentName" placeholder="اسم المندوب">
+<button onclick="addAgent()">إضافة مندوب</button>
+<ul id="agentsList"></ul>
+
+<div id="agentDetails" style="display:none" class="box">
+<h3>تفاصيل المندوب: <span id="currentAgentName"></span></h3>
+<p>الواصل: <span id="agent_received">0</span></p>
+<p>الباقي: <span id="agent_remaining">0</span></p>
+<input id="op_amount" placeholder="المبلغ المستلم">
+<input id="op_remaining" placeholder="المبلغ الباقي">
+<button onclick="addOperation()">إضافة عملية</button>
+<button onclick="closeAgentDetails()">إغلاق التفاصيل</button>
+</div>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
