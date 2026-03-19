@@ -1,64 +1,90 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<title>الحسابات - الموقع</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Accounts Manager</title>
+
 <link rel="stylesheet" href="style.css">
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
 </head>
 <body>
 
-<!-- شاشة تسجيل الدخول -->
-<div id="loginScreen">
-<h2>تسجيل الدخول</h2>
-<input id="username" placeholder="اسم المستخدم">
-<input type="password" id="password" placeholder="كلمة المرور">
-<button onclick="login()">دخول</button>
-
-<h3>أو إنشاء حساب جديد</h3>
-<input id="newUser" placeholder="اسم المستخدم الجديد">
-<input type="password" id="newPass" placeholder="كلمة المرور">
-<button onclick="register()">إنشاء حساب</button>
+<!-- تسجيل -->
+<div id="authBox">
+  <h2>تسجيل الدخول</h2>
+  <input id="username" placeholder="اسم المستخدم">
+  <input id="password" type="password" placeholder="كلمة المرور">
+  <button onclick="login()">دخول</button>
+  <button onclick="signup()">إنشاء حساب</button>
 </div>
 
-<!-- الموقع الرئيسي -->
-<div id="app" style="display:none">
-<h1>الحسابات</h1>
-<button onclick="darkMode()">الوضع الليلي</button>
+<!-- التطبيق -->
+<div id="appBox" style="display:none;">
 
-<!-- قائمة جانبية -->
-<div id="sidebar">
-<button onclick="showPage('dashboard')">الصفحة الرئيسية</button>
-<button onclick="showPage('agents')">المندوبين</button>
-</div>
+<header>
+<h1>📊 نظام إدارة الحسابات</h1>
+<button onclick="logout()">تسجيل خروج</button>
+</header>
 
-<!-- صفحة Dashboard -->
-<div id="dashboard" class="page">
-<h2>الإحصائيات</h2>
-<p>إجمالي الواصل اليوم: <span id="dailyTotal">0</span></p>
-<p>إجمالي الواصل الشهر: <span id="monthlyTotal">0</span></p>
-<p>إجمالي الواصل السنة: <span id="yearlyTotal">0</span></p>
-<canvas id="statsChart"></canvas>
-</div>
+<section class="dashboard">
+<div class="card">داخل: <span id="insideTotal">0</span></div>
+<div class="card">خارج: <span id="outsideTotal">0</span></div>
+<div class="card">بطاقات: <span id="cardsTotal">0</span></div>
+</section>
 
-<!-- صفحة المندوبين -->
-<div id="agents" class="page" style="display:none">
-<h2>المندوبين</h2>
-<input id="agentName" placeholder="اسم المندوب">
-<button onclick="addAgent()">إضافة مندوب</button>
+<section>
+<input id="name" placeholder="اسم المندوب">
+<select id="type">
+<option value="inside">داخل</option>
+<option value="outside">خارج</option>
+</select>
+<button onclick="addAgent()">إضافة</button>
+</section>
+
+<input id="search" oninput="searchAgent()" placeholder="بحث">
+
 <ul id="agentsList"></ul>
 
-<div id="agentDetails" style="display:none" class="box">
-<h3>تفاصيل المندوب: <span id="currentAgentName"></span></h3>
-<p>الواصل: <span id="agent_received">0</span></p>
-<p>الباقي: <span id="agent_remaining">0</span></p>
-<input id="op_amount" placeholder="المبلغ المستلم">
-<input id="op_remaining" placeholder="المبلغ الباقي">
-<button onclick="addOperation()">إضافة عملية</button>
-<button onclick="closeAgentDetails()">إغلاق التفاصيل</button>
+<button onclick="resetAll()">تصفير الكل</button>
+
+<hr>
+
+<h3>📅 التقارير</h3>
+
+من:
+<input type="date" id="fromDate">
+إلى:
+<input type="date" id="toDate">
+
+<button onclick="generateReport()">عرض التقرير</button>
+<button onclick="exportPDF()">PDF</button>
+
+<div id="reportBox"></div>
+
+</div>
+
+<!-- مودال -->
+<div id="modal" class="hidden">
+<div class="modalBox">
+
+<h3 id="modalTitle"></h3>
+
+<button onclick="chooseType('cards')">بطاقات</button>
+<button onclick="chooseType('money')">مبلغ</button>
+<button onclick="chooseType('tip')">إكرامية</button>
+<button onclick="chooseType('debt')">سلفة</button>
+
+<input id="valueInput" type="number" placeholder="القيمة">
+
+<button onclick="saveTransaction()">حفظ</button>
+<button onclick="closeModal()">إغلاق</button>
+
 </div>
 </div>
 
 <script src="app.js"></script>
+
 </body>
 </html>
